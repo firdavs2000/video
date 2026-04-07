@@ -33,7 +33,7 @@ export default function TrandingSeries() {
         {/* TITLE */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white">
-            Trending Series
+            Recomende for you
           </h2>
 
           <button className="text-sm text-gray-300 hover:text-white">

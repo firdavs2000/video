@@ -10,7 +10,7 @@ type Movie = {
   release_date: string;
 };
 
-export default function TrandingSeries() {
+export default function MyWatchlist() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -28,24 +28,23 @@ export default function TrandingSeries() {
 
   return (
     <section className="py-10">
-      {/* Container */}
-      <div >
-
+      <div className=" px-4">
+        
         {/* TITLE */}
-        <div className="flex items-center justify-between mb-6 w-full">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white">
-            Trending Series
+            My Watchlist
           </h2>
 
-          <button className="text-sm text-gray-300 hover:text-white flex-shrink-0">
+          <button className="text-sm text-gray-300 hover:text-white">
             View All →
           </button>
         </div>
 
+        {/* SCROLL */}
+        <div className="overflow-x-auto no-scrollbar">
+          <div className="flex gap-4">
 
-        {/* HORIZONTAL SCROLL */}
-        <div className="overflow-x-auto no-scrollbar scroll-smooth">
-          <div className="flex gap-4 xl:gap-6 2xl:gap-8 snap-x snap-mandatory">
             {movies.map((item) => {
               const imageUrl =
                 item.poster_path && item.poster_path.startsWith("/")
@@ -55,11 +54,11 @@ export default function TrandingSeries() {
               return (
                 <div
                   key={item.id}
-                  className="w-[160px] sm:w-[180px] md:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px] flex-shrink-0 group relative rounded-2xl overflow-hidden shadow-lg cursor-pointer snap-start transition-transform duration-300 hover:scale-105"
+                  className="w-[160px] sm:w-[180px] md:w-[200px] lg:w-[220px] flex-shrink-0 group relative rounded-2xl overflow-hidden shadow-lg cursor-pointer"
                 >
                   {/* IMAGE */}
                   <div
-                    className="h-[240px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[320px] 2xl:h-[340px] bg-cover bg-center"
+                    className="h-[240px] sm:h-[260px] md:h-[280px] bg-cover bg-center transition duration-500 group-hover:scale-105"
                     style={{ backgroundImage: `url(${imageUrl})` }}
                   />
 
@@ -96,8 +95,10 @@ export default function TrandingSeries() {
                 </div>
               );
             })}
+
           </div>
         </div>
+
       </div>
     </section>
   );

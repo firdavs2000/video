@@ -10,7 +10,7 @@ type Movie = {
   release_date: string;
 };
 
-export default function TrandingSeries() {
+export default function TrandingMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
