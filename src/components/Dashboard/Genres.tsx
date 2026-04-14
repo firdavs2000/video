@@ -1,91 +1,86 @@
+import Slider from "react-slick";
 import { useEffect, useState } from "react";
-import { getMovies } from "../../services/api";
-import "../../index.css";
+import { getTrendingMovies } from "../../services/api";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 type Movie = {
   id: number;
-  title: string;
+  name: string;
   overview: string;
   poster_path: string | null;
-  release_date: string;
+  first_air_date: string;
 };
 
 export default function Genres() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getMovies()
-      .then((data: Movie[]) => {
-        setMovies(data);
-      })
-      .finally(() => setLoading(false));
+    async function load() {
+      try {
+        const data = await getTrendingMovies();
+        setMovies(data.results || []);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
   }, []);
 
-  if (loading) {
-    return <p className="text-center text-white">Loading...</p>;
-  }
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 1536, settings: { slidesToShow: 4 } },
+      { breakpoint: 1280, settings: { slidesToShow: 3 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
+  };
+
+  if (loading)
+    return <p className="text-white text-center py-20">Loading...</p>;
 
   return (
-    <section className="py-10">
-      {/* Container */}
-      <div >
-        
-        {/* TITLE */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-white">
-            Genres
-          </h2>
+    <section className="py-10 bg-gray-900">
+      <div className="px-4 max-w-[1440px] mx-auto">
+        <h2 className="text-2xl text-white font-bold mb-6">
+          Genres
+        </h2>
 
-          <button className="text-sm text-gray-300 hover:text-white">
-            View All →
-          </button>
-        </div>
+        <Slider {...settings}>
+          {movies.map((item) => {
+            const imageUrl = item.poster_path
+              ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+              : "https://via.placeholder.com/500x750";
 
-        {/* HORIZONTAL SCROLL */}
-        <div className="overflow-x-auto no-scrollbar scroll-smooth">
-          <div className="flex gap-4 xl:gap-6 2xl:gap-8 snap-x snap-mandatory">
-            {movies.map((item) => {
-              const imageUrl =
-                item.poster_path && item.poster_path.startsWith("/")
-                  ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                  : "https://via.placeholder.com/500x750?text=No+Image";
-
-              return (
-                <div
-                  key={item.id}
-                  className="w-[160px] sm:w-[180px] md:w-[200px] lg:w-[220px] xl:w-[240px] 2xl:w-[260px] flex-shrink-0 group relative rounded-2xl overflow-hidden shadow-lg cursor-pointer snap-start transition-transform duration-300 hover:scale-105"
-                >
-                  {/* IMAGE */}
+            return (
+              <div key={item.id} className="px-2">
+                <div className="relative rounded-2xl overflow-hidden hover:scale-105 transition">
                   <div
-                    className="h-[240px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[320px] 2xl:h-[340px] bg-cover bg-center"
+                    className="h-[340px] bg-cover bg-center"
                     style={{ backgroundImage: `url(${imageUrl})` }}
                   />
 
-                  {/* OVERLAY */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
 
-                  {/* PLAY ICON */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                    <div className="bg-white/90 p-3 rounded-full">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/727/727245.png"
-                        alt="play"
-                        className="w-6 h-6"
-                      />
-                    </div>
-                  </div>
-
-                  {/* TEXT */}
                   <div className="absolute bottom-0 p-3 text-white">
                     <p className="text-xs opacity-70">
-                      {item.release_date
-                        ? new Date(item.release_date).getFullYear()
+                      {item.first_air_date
+                        ? new Date(item.first_air_date).getFullYear()
                         : "No date"}
                     </p>
 
                     <h4 className="font-semibold text-sm line-clamp-1">
-                      {item.title}
+                      {item.name}
                     </h4>
 
                     <p className="text-xs opacity-80 line-clamp-2">
@@ -93,10 +88,10 @@ export default function Genres() {
                     </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
+              </div>
+            );
+          })}
+        </Slider>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMovies } from "../../services/api";
+import { getUpcoming } from "../../services/api";
 import "../../index.css";
 
 type Movie = {
@@ -15,11 +15,18 @@ export default function TrandingSeries() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getMovies()
-      .then((data: Movie[]) => {
-        setMovies(data);
-      })
-      .finally(() => setLoading(false));
+    async function load() {
+      try {
+        const data = await getUpcoming();
+        setMovies(data.results || []);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
   }, []);
 
   if (loading) {

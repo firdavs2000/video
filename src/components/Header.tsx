@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate } from "react-router-dom";
+
 import {
   Search,
   Bell,
@@ -14,19 +14,15 @@ import {
 } from "lucide-react";
 
 import avatarImg from "../assets/sidebar.png";
-import { useAuth } from "../hooks/useAuth";
+
 
 const Header = () => {
   const [userOpen, setUserOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
 
-  const logout = useAuth((state) => state.logout);
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+
+
 
   return (
     <header className="w-full bg-[#191919] text-white">
@@ -102,7 +98,7 @@ const Header = () => {
                   </button>
 
                   <button
-                    onClick={handleLogout}
+                   
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded"
                   >
                     <LogOut className="w-4 h-4" /> Logout

@@ -7,7 +7,7 @@ import MyWatchlist from './MyWatchlist'
 import TopMovies from './TopMovies'
 import TopSeries from './TopSeries'
 import Trailer from './Trailer'
-import TrendingMovies from './Trending'
+ import TrendingMovies from './Trending'
 import TrandingSeries from './TrendingSeries'
 import TrendingTVShows from './TrendingTvShows'
 
@@ -25,7 +25,7 @@ function Dashboard() {
         xl:max-w-[1440px]
       ">
         <ChartSection />
-        <TrendingMovies />
+        <TrendingMovies /> 
         <Trailer />
         <TrandingSeries />
         <Genres />

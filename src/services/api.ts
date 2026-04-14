@@ -1,29 +1,55 @@
+import axios from "axios";
+
+const API_KEY = "cf721fb39598ff23c1ecb867774e5832";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-const TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjcyMWZiMzk1OThmZjIzYzFlY2I4Njc3NzRlNTgzMiIsIm5iZiI6MTcyODM4NzU2Ni43NDIsInN1YiI6IjY3MDUxOWVlNGIwYzViOWQ3MTY5ZDQ3OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.behOp2elFCaCI-xDjG7GBmOHtkqiNulLy2rIu2n0fVM";
 
-export async function getMovies() {
-  try {
-    const res = await fetch(`${BASE_URL}/movie/popular`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        Accept: "application/json",
-      },
-    });
+export const getTrendingTV = async () => {
+  const res = await axios.get(`${BASE_URL}/trending/tv/day`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
 
-    if (!res.ok) {
-      throw new Error("API ishlamadi");
-    }
+  return res.data;
+};
 
-    const data = await res.json();
 
-    console.log("API DATA:", data); 
 
-    return data.results;
-  } catch (error) {
-    console.error("Xatolik:", error);
-    return [];
-  }
-}
+export const getTrendingMovies = async () => {
+  const res = await axios.get(`${BASE_URL}/trending/movie/day`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+
+  return res.data;
+};
+
+export const getPopular = async () => {
+  const res = await axios.get(`${BASE_URL}/movie/popular`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+
+  return res.data;
+};
+export const getUpcoming = async () => {
+  const res = await axios.get(`${BASE_URL}/movie/upcoming`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+
+  return res.data;
+};
+export const getTrending = async () => {
+  const res = await axios.get(`${BASE_URL}/trending/movie/week`, {
+    params: {
+      api_key: API_KEY,
+    },
+  });
+
+  return res.data;
+};
