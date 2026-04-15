@@ -7,58 +7,46 @@ import MyWatchlist from './MyWatchlist'
 import TopMovies from './TopMovies'
 import TopSeries from './TopSeries'
 import Trailer from './Trailer'
- import TrendingMovies from './Trending'
+import TrendingMovies from './Trending'
 import TrandingSeries from './TrendingSeries'
 import TrendingTVShows from './TrendingTvShows'
 
-
 function Dashboard() {
   return (
-    <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+    <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
 
-      {/* MAIN */}
-      <div className="
-        flex-1 
-        w-full 
-        mx-auto 
-        px-4 sm:px-6 lg:px-8
-        xl:max-w-[1440px]
-      ">
+      {/* SINGLE CONTAINER (ENG MUHIM FIX) */}
+      <main className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10 overflow-x-hidden">
+
         <ChartSection />
-        <TrendingMovies /> 
+
+        <TrendingMovies />
+
         <Trailer />
+
         <TrandingSeries />
+
         <Genres />
+
         <MovieSection />
+
         <TopSeries />
+
         <TopMovies />
 
-      </div>
+        <TrendingTVShows />
+
+        <MyWatchlist />
+
+      </main>
 
       {/* FOOTER */}
-      <div className="
-        w-full 
-        mx-auto 
-        px-4 sm:px-6 lg:px-8 
-        xl:max-w-[1440px]
-      ">
+      <footer className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-10">
         <Legend />
+      </footer>
 
-      </div>
-      <div className="
-        flex-1 
-        w-full 
-        mx-auto 
-        px-4 sm:px-6 lg:px-8
-        xl:max-w-[1440px]
-        pt-10
-      ">
-        <TrendingTVShows />
-        <MyWatchlist />
-      </div>
     </div>
   )
 }
-
 
 export default Dashboard
